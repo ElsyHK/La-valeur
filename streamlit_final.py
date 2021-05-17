@@ -31,7 +31,7 @@ path1 = 'https://drive.google.com/uc?export=download&id='+url1.split('/')[-2]
 
 #upload file
 upload_file = st.sidebar.file_uploader("Upload Data", type=['CSV','xlsx'])
-
+#
 if upload_file is None:
     df_customers2019 = load_data(path1)
 
