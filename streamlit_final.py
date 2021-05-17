@@ -6,11 +6,12 @@ import plotly.graph_objects as go
 import plotly.express as px
 from datetime import datetime
 from mlxtend.frequent_patterns import apriori, association_rules
+import openpyxl
 
 # Define a function to load data for faster computation
 @st.cache(allow_output_mutation=True)
 def load_data(path):
-    df = pd.read_excel(path)
+    df = pd.read_excel(path, engine='openpyxl')
     return df
 
 #sidebar design
