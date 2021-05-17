@@ -9,6 +9,7 @@ import statsmodels.api
 from datetime import datetime
 import matplotlib.pyplot as plt
 from mlxtend.frequent_patterns import apriori, association_rules
+import xlrd
 
 # Define a function to load data for faster computation
 @st.cache(allow_output_mutation=True)
