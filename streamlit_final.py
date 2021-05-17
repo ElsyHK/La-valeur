@@ -9,12 +9,12 @@ import statsmodels.api
 from datetime import datetime
 import matplotlib.pyplot as plt
 from mlxtend.frequent_patterns import apriori, association_rules
-import xlrd
+import openpyxl
 
 # Define a function to load data for faster computation
 @st.cache(allow_output_mutation=True)
 def load_data(path):
-    df = pd.read_excel(path)
+    df = pd.read_excel(path, engine='openpyxl')
     return df
 
 # Load Data
