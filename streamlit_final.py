@@ -4,25 +4,39 @@ import streamlit as st
 import plotly
 import plotly.graph_objects as go
 import plotly.express as px
-import scipy
-import statsmodels.api
 from datetime import datetime
-import matplotlib.pyplot as plt
 from mlxtend.frequent_patterns import apriori, association_rules
-import openpyxl
 
 # Define a function to load data for faster computation
 @st.cache(allow_output_mutation=True)
 def load_data(path):
-    df = pd.read_excel(path, engine='openpyxl')
+    df = pd.read_excel(path)
     return df
+
+#sidebar design
+st.sidebar.subheader("App Designer: Elsy Hobeika")
+st.sidebar.write("")
+
+# Side Bar Menu
+add_selectbox = st.sidebar.selectbox(
+    'MENU',
+    ('Overview','Sales','Supplier Analysis','Customer Analysis','Recommendation System')
+)
 
 # Load Data
 url1 = 'https://drive.google.com/file/d/1D0qj5YR9-KTd11f-D4fKW6bHf1L3n3rS/view?usp=sharing'
 path1 = 'https://drive.google.com/uc?export=download&id='+url1.split('/')[-2]
 
-#path_sept_2019= r'C:\Users\User\Desktop\La valeur\BEIT EL KIKKO BRANCH SEP 2019.xlsx'
-df_customers2019 = load_data(path1)
+
+#upload file
+upload_file = st.sidebar.file_uploader("Upload Data", type=['CSV','xlsx'])
+
+if upload_file is None:
+    df_customers2019 = load_data(path1)
+
+if upload_file is not None:
+    df_customers2019 = load_data(upload_file)
+
 
 # Remove Hours from the date
 df_customers2019['Date'] = pd.to_datetime(df_customers2019['Date']).dt.date
@@ -32,11 +46,7 @@ Client_divers = df_customers2019[df_customers2019['Customer Description'] == 'CL
 # Define dataframe loyal custumers
 loyal_customer = df_customers2019[df_customers2019['Customer Description'] != 'CLIENT DIVERS']
 
-# Side Bar Menu
-add_selectbox = st.sidebar.selectbox(
-    'MENU',
-    ('Overview','Sales','Supplier Analysis','Customer Analysis','Recommendation System')
-)
+
 
 # Overview Page
 if add_selectbox == 'Overview':
@@ -55,14 +65,14 @@ if add_selectbox == 'Overview':
     st.write("- Customers analysis: what segment of customers contributes to the highest revenue? What is their purchasing power?")
     st.write("- Recommendation system to increase revenues")
 
-
+    # check data
     data_button = st.button("Check Data")
     if data_button:
         data = df_customers2019.head()
         data
 
 
-# Under Sales
+# Sales Page
 if add_selectbox == 'Sales':
     st.title(" Monthly Sales")
     Total_sales = df_customers2019['Operation Net Total'].sum()
@@ -118,7 +128,7 @@ if add_selectbox == 'Customer Analysis':
 
     if option =='CLIENT DIVERS':
         revenue = Client_divers['Operation Net Total'].sum()
-        st.write( 'Revenue by', option, 'is', revenue,'LBP')
+        st.write( 'Revenue by', option, 'is', int(revenue),'LBP')
 
     elif option == 'LOYAL CUSTOMERS':
         # revenues made by loyal customers
@@ -148,12 +158,13 @@ if add_selectbox == 'Customer Analysis':
 
     elif option == 'ALL CUSTOMERS':
         revenue = df_customers2019['Operation Net Total'].sum()
-        st.write( 'Revenue by', option, 'is', revenue,'LBP')
+        st.write( 'Revenue by', option, 'is', int(revenue),'LBP')
 
 
 
-# Check the preferred brands by loyal CUSTOMERS and Client Divers
+# Supplier Analysis Page
 if add_selectbox == 'Supplier Analysis':
+    # Supplier comparison for loyal customers and clients divers
     st.title("Supplier Analysis")
     st.subheader("Suppliers Comparison by Section ")
 
@@ -231,13 +242,12 @@ if add_selectbox == 'Recommendation System':
     # Association rule mining
     # loading data
     def load_data1(path):
-        df = pd.read_csv(path)
+        df = pd.read_csv(path, encoding='utf-8')
         return df
 
 
     url2 = 'https://drive.google.com/file/d/1y4kOlIxbzOiDMxFw7i8_oCW27tguLtvf/view?usp=sharing'
-    path2 = 'https://drive.google.com/uc?export=download&id='+url1.split('/')[-2]
-    #path_groceries = r'C:\Users\User\Desktop\groceries1.csv'
+    path2 = 'https://drive.google.com/uc?export=download&id='+url2.split('/')[-2]
     df = load_data1(path2)
 
     # dropping first column
