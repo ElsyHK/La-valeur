@@ -15,8 +15,8 @@ def load_data(path):
     return df
 
 def load_data1(path):
-        df = pd.read_csv(path, encoding='utf-8')
-        return df
+    df = pd.read_csv(path, encoding='utf-8')
+    return df
 
 #sidebar design
 st.sidebar.subheader("App Designer: Elsy Hobeika")
