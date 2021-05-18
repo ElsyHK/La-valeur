@@ -18,6 +18,10 @@ def load_data1(path):
     df = pd.read_csv(path, encoding='utf-8')
     return df
 
+def freq_itms(onehot_df):
+    freq_items =apriori(onehot_df, min_support=0.006, use_colnames=True,verbose=1)
+    return freq_items
+
 #sidebar design
 st.sidebar.subheader("App Designer: Elsy Hobeika")
 st.sidebar.write("")
@@ -249,9 +253,7 @@ if add_selectbox == 'Recommendation System':
 
 
     # Association rule mining
-    # loading data
-   
-
+    
     # dropping first column
     df1 = df_encoding.drop(['Item(s)'], axis=1)
 
@@ -280,9 +282,9 @@ if add_selectbox == 'Recommendation System':
     # get frequent items
     #freq_items=apriori(onehot_df, min_support=0.006, use_colnames=True,verbose=1)
     
-    def freq_itms(onehot_df):
-        freq_items =apriori(onehot_df, min_support=0.006, use_colnames=True,verbose=1)
-        return freq_items
+#     def freq_itms(onehot_df):
+#         freq_items =apriori(onehot_df, min_support=0.006, use_colnames=True,verbose=1)
+#         return freq_items
     
     freq_items = freq_itms(onehot_df)
 #     #get association rules
