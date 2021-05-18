@@ -261,73 +261,73 @@ if add_selectbox == 'Recommendation System':
     items =  pd.unique(column_values)
 
 
-    # Manual Encoding
-    itemset = set(items)
-    encoded_vals=[]
-    for index, row in df1.iterrows():
-        rowset=set(row)
-        labels={}
-        uncommon=list(itemset-rowset)
-        common=list(rowset)
-        for uc in uncommon:
-            labels[uc]=0
-        for c in common:
-            labels[c]=1
-        encoded_vals.append(labels)
-    onehot_df = pd.DataFrame(encoded_vals)
-    onehot_df = onehot_df.loc[:, onehot_df.columns.notnull()]
+#     # Manual Encoding
+#     itemset = set(items)
+#     encoded_vals=[]
+#     for index, row in df1.iterrows():
+#         rowset=set(row)
+#         labels={}
+#         uncommon=list(itemset-rowset)
+#         common=list(rowset)
+#         for uc in uncommon:
+#             labels[uc]=0
+#         for c in common:
+#             labels[c]=1
+#         encoded_vals.append(labels)
+#     onehot_df = pd.DataFrame(encoded_vals)
+#     onehot_df = onehot_df.loc[:, onehot_df.columns.notnull()]
 
-    # get frequent items
-    freq_items=apriori(onehot_df, min_support=0.006, use_colnames=True,verbose=1)
-    #get association rules
-    rules=association_rules(freq_items, metric="confidence", min_threshold=0.25)
-    # sorting by confidence
-    rules=rules.sort_values(by=['confidence'], ascending=False)
-    #rules_sorted_by_conf
+#     # get frequent items
+#     freq_items=apriori(onehot_df, min_support=0.006, use_colnames=True,verbose=1)
+#     #get association rules
+#     rules=association_rules(freq_items, metric="confidence", min_threshold=0.25)
+#     # sorting by confidence
+#     rules=rules.sort_values(by=['confidence'], ascending=False)
+#     #rules_sorted_by_conf
 
-    #transform items array to a list
-    items = items.tolist()
-    items.pop(4)
+#     #transform items array to a list
+#     items = items.tolist()
+#     items.pop(4)
 
-    # define length_antecedents, length_pconsequents
-    rules['length_antecedents'] = rules['antecedents'].apply(lambda x: len(x))
-    rules['length_consequents'] = rules['consequents'].apply(lambda x: len(x))
+#     # define length_antecedents, length_pconsequents
+#     rules['length_antecedents'] = rules['antecedents'].apply(lambda x: len(x))
+#     rules['length_consequents'] = rules['consequents'].apply(lambda x: len(x))
 
 
 
-    if st.checkbox("Increase Sales by Item"):
-    # Recommendation System 1
-        st.title("Increase Sales by Item")
-        item = st.selectbox(
-        'Select Item'.upper(),
-        items
-        )
+#     if st.checkbox("Increase Sales by Item"):
+#     # Recommendation System 1
+#         st.title("Increase Sales by Item")
+#         item = st.selectbox(
+#         'Select Item'.upper(),
+#         items
+#         )
 
-        # define consquent item to get the itemset
-        rules_item=rules[rules['consequents']=={item}]
-        X = rules_item.sort_values(by=['confidence'], ascending=False)
-        st.header("Proposed Solution")
-        st.write("Provide discounts on the below itemsets")
-        X['antecedents']
+#         # define consquent item to get the itemset
+#         rules_item=rules[rules['consequents']=={item}]
+#         X = rules_item.sort_values(by=['confidence'], ascending=False)
+#         st.header("Proposed Solution")
+#         st.write("Provide discounts on the below itemsets")
+#         X['antecedents']
 
-    if st.checkbox("Grow Share of Wallet"):
-        # Recommendation System 2
-        st.title("Grow Share of Wallet")
-        st.subheader("Define Basket")
-        # create a list with possible lenghth of item set
-        nb_of_antecedents = st.selectbox("Select number of items".upper(), rules['length_antecedents'].unique())
+#     if st.checkbox("Grow Share of Wallet"):
+#         # Recommendation System 2
+#         st.title("Grow Share of Wallet")
+#         st.subheader("Define Basket")
+#         # create a list with possible lenghth of item set
+#         nb_of_antecedents = st.selectbox("Select number of items".upper(), rules['length_antecedents'].unique())
 
-        # Display items
-        antecedents = set()
-        for i in range(nb_of_antecedents):
-            itemi = st.selectbox(
-            " Select item ".upper()+str(i+1),
-            items
-            )
-            antecedents.add(itemi)
+#         # Display items
+#         antecedents = set()
+#         for i in range(nb_of_antecedents):
+#             itemi = st.selectbox(
+#             " Select item ".upper()+str(i+1),
+#             items
+#             )
+#             antecedents.add(itemi)
 
-        st.write('Items in Basket:',antecedents)
-        st.header("Proposed Solution")
-        st.write("Provide discounts on the below items")
-        predicted_item = rules[rules['antecedents']== antecedents]
-        predicted_item['consequents']
+#         st.write('Items in Basket:',antecedents)
+#         st.header("Proposed Solution")
+#         st.write("Provide discounts on the below items")
+#         predicted_item = rules[rules['antecedents']== antecedents]
+#         predicted_item['consequents']
