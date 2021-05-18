@@ -278,13 +278,13 @@ if add_selectbox == 'Recommendation System':
     onehot_df = onehot_df.loc[:, onehot_df.columns.notnull()]
 
     # get frequent items
-    freq_items=apriori(onehot_df, min_support=0.006, use_colnames=True,verbose=1)
+    #freq_items=apriori(onehot_df, min_support=0.006, use_colnames=True,verbose=1)
     
-    def freq_itms(onehot_df, min_support=0.006, use_colnames=True,verbose=1):
+    def freq_itms(onehot_df):
         freq_items =apriori(onehot_df, min_support=0.006, use_colnames=True,verbose=1)
         return freq_items
     
-    freq_items = freq_itms(onehot_df, min_support=0.006, use_colnames=True,verbose=1)
+    freq_items = freq_itms(onehot_df)
 #     #get association rules
 #     rules=association_rules(freq_items, metric="confidence", min_threshold=0.25)
 #     # sorting by confidence
