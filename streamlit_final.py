@@ -261,29 +261,29 @@ if add_selectbox == 'Recommendation System':
     items =  pd.unique(column_values)
 
 
-#     # Manual Encoding
-#     itemset = set(items)
-#     encoded_vals=[]
-#     for index, row in df1.iterrows():
-#         rowset=set(row)
-#         labels={}
-#         uncommon=list(itemset-rowset)
-#         common=list(rowset)
-#         for uc in uncommon:
-#             labels[uc]=0
-#         for c in common:
-#             labels[c]=1
-#         encoded_vals.append(labels)
-#     onehot_df = pd.DataFrame(encoded_vals)
-#     onehot_df = onehot_df.loc[:, onehot_df.columns.notnull()]
+    # Manual Encoding
+    itemset = set(items)
+    encoded_vals=[]
+    for index, row in df1.iterrows():
+        rowset=set(row)
+        labels={}
+        uncommon=list(itemset-rowset)
+        common=list(rowset)
+        for uc in uncommon:
+            labels[uc]=0
+        for c in common:
+            labels[c]=1
+        encoded_vals.append(labels)
+    onehot_df = pd.DataFrame(encoded_vals)
+    onehot_df = onehot_df.loc[:, onehot_df.columns.notnull()]
 
-#     # get frequent items
-#     freq_items=apriori(onehot_df, min_support=0.006, use_colnames=True,verbose=1)
-#     #get association rules
-#     rules=association_rules(freq_items, metric="confidence", min_threshold=0.25)
-#     # sorting by confidence
-#     rules=rules.sort_values(by=['confidence'], ascending=False)
-#     #rules_sorted_by_conf
+    # get frequent items
+    freq_items=apriori(onehot_df, min_support=0.006, use_colnames=True,verbose=1)
+    #get association rules
+    rules=association_rules(freq_items, metric="confidence", min_threshold=0.25)
+    # sorting by confidence
+    rules=rules.sort_values(by=['confidence'], ascending=False)
+    #rules_sorted_by_conf
 
 #     #transform items array to a list
 #     items = items.tolist()
