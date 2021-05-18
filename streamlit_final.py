@@ -257,7 +257,7 @@ if add_selectbox == 'Recommendation System':
 
     # getting uniques Items
     columns = df1.columns.to_list()
-    column_values = df[columns].values.ravel()
+    column_values = df_encoding[columns].values.ravel()
     items =  pd.unique(column_values)
 
 
