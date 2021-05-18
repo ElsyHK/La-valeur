@@ -14,6 +14,10 @@ def load_data(path):
     df = pd.read_excel(path, engine='openpyxl')
     return df
 
+def load_data1(path):
+        df = pd.read_csv(path, encoding='utf-8')
+        return df
+
 #sidebar design
 st.sidebar.subheader("App Designer: Elsy Hobeika")
 st.sidebar.write("")
@@ -27,6 +31,10 @@ add_selectbox = st.sidebar.selectbox(
 # Load Data
 url1 = 'https://drive.google.com/file/d/1D0qj5YR9-KTd11f-D4fKW6bHf1L3n3rS/view?usp=sharing'
 path1 = 'https://drive.google.com/uc?export=download&id='+url1.split('/')[-2]
+
+url2 = 'https://drive.google.com/file/d/1y4kOlIxbzOiDMxFw7i8_oCW27tguLtvf/view?usp=sharing'
+path2 = 'https://drive.google.com/uc?export=download&id='+url2.split('/')[-2]
+df_encoding = load_data1(path2)
 
 
 #upload file
@@ -242,17 +250,10 @@ if add_selectbox == 'Recommendation System':
 
     # Association rule mining
     # loading data
-    def load_data1(path):
-        df = pd.read_csv(path, encoding='utf-8')
-        return df
-
-
-    url2 = 'https://drive.google.com/file/d/1y4kOlIxbzOiDMxFw7i8_oCW27tguLtvf/view?usp=sharing'
-    path2 = 'https://drive.google.com/uc?export=download&id='+url2.split('/')[-2]
-    df = load_data1(path2)
+   
 
     # dropping first column
-    df1 = df.drop(['Item(s)'], axis=1)
+    df1 = df_encoding.drop(['Item(s)'], axis=1)
 
     # getting uniques Items
     columns = df1.columns.to_list()
