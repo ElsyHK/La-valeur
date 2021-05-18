@@ -14,10 +14,12 @@ def load_data(path):
     df = pd.read_excel(path, engine='openpyxl')
     return df
 
+@st.cache(allow_output_mutation=True)
 def load_data1(path):
     df = pd.read_csv(path, encoding='utf-8')
     return df
 
+@st.cache(allow_output_mutation=True)
 def freq_itms(onehot_df):
     freq_items =apriori(onehot_df, min_support=0.006, use_colnames=True,verbose=1)
     return freq_items
