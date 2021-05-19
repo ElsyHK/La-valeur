@@ -320,7 +320,9 @@ if add_selectbox == 'Recommendation System':
         st.title("Grow Share of Wallet")
         st.subheader("Define Basket")
         # create a list with possible lenghth of item set
-        nb_of_antecedents = st.selectbox("Select number of items".upper(), rules['length_antecedents'].unique())
+        x = np.sort(rules['length_antecedents'].unique())
+        nb_of_antecedents = st.selectbox("Select number of items".upper(), x)
+        
 
         # Display items
         antecedents = set()
